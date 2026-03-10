@@ -1,0 +1,8 @@
+English meaning
+Setosa Iris flower species
+
+It is a type of Iris flower.
+It usually has small flowers and thin petals, and in the Machine Learning dataset it is the easiest species to identify.
+
+Hindi meaning
+सेटोसा आइरिस फूल की प्रजाति यह Iris फूल की एक किस्म है। इसमें आमतौर पर छोटे फूल और पतली पंखुड़ियाँ होती हैं और यह ML dataset में सबसे आसानी से पहचान में आने वाली species है।

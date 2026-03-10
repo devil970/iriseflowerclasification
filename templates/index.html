@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iris Flower Classification System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Iris Flower Classification System</h1>
+        <p class="subtitle">Predict the species of Iris flower using Machine Learning</p>
+        
+        <div class="form-container">
+            <div class="input-group">
+                <label for="sepal_length">Sepal Length (cm)</label>
+                <input type="number" id="sepal_length" step="0.1" placeholder="e.g., 5.1" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="sepal_width">Sepal Width (cm)</label>
+                <input type="number" id="sepal_width" step="0.1" placeholder="e.g., 3.5" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="petal_length">Petal Length (cm)</label>
+                <input type="number" id="petal_length" step="0.1" placeholder="e.g., 1.4" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="petal_width">Petal Width (cm)</label>
+                <input type="number" id="petal_width" step="0.1" placeholder="e.g., 0.2" required>
+            </div>
+            
+            <button onclick="predictFlower()" class="predict-btn">Predict Species</button>
+        </div>
+        
+        <div id="result" class="result hidden">
+            <h2>Prediction Result</h2>
+            <img id="flower-image" src="" alt="Iris Flower" class="flower-image">
+            <p id="prediction-text"></p>
+            <div class="description">
+                <h3>English:</h3>
+                <p id="description-english"></p>
+                <h3>हिंदी:</h3>
+                <p id="description-hindi"></p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
