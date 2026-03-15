@@ -13,27 +13,29 @@
         
         <div class="form-container">
             <div class="input-group">
-                <label for="sepal_length">Sepal Length (cm)</label>
+                <label for="sepal_length">Sepal Length (cm) <span class="range-hint">4.3 – 7.9</span></label>
                 <input type="number" id="sepal_length" step="0.1" placeholder="e.g., 5.1" required>
             </div>
             
             <div class="input-group">
-                <label for="sepal_width">Sepal Width (cm)</label>
+                <label for="sepal_width">Sepal Width (cm) <span class="range-hint">2.0 – 4.4</span></label>
                 <input type="number" id="sepal_width" step="0.1" placeholder="e.g., 3.5" required>
             </div>
             
             <div class="input-group">
-                <label for="petal_length">Petal Length (cm)</label>
+                <label for="petal_length">Petal Length (cm) <span class="range-hint">1.0 – 6.9</span></label>
                 <input type="number" id="petal_length" step="0.1" placeholder="e.g., 1.4" required>
             </div>
             
             <div class="input-group">
-                <label for="petal_width">Petal Width (cm)</label>
+                <label for="petal_width">Petal Width (cm) <span class="range-hint">0.1 – 2.5</span></label>
                 <input type="number" id="petal_width" step="0.1" placeholder="e.g., 0.2" required>
             </div>
             
             <button onclick="predictFlower()" class="predict-btn">Predict Species</button>
         </div>
+
+        <div id="error-message" class="error-message hidden"></div>
         
         <div id="result" class="result hidden">
             <h2>Prediction Result</h2>

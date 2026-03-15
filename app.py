@@ -12,15 +12,37 @@ with open('models/iris_model.pkl', 'rb') as f:
 def home():
     return render_template('index.html')
 
+# Valid ranges derived from the 150-sample Iris dataset
+VALID_RANGES = {
+    'sepal_length': (4.3, 7.9),
+    'sepal_width':  (2.0, 4.4),
+    'petal_length': (1.0, 6.9),
+    'petal_width':  (0.1, 2.5),
+}
+
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
         data = request.get_json()
+
+        parsed = {}
+        for field, (low, high) in VALID_RANGES.items():
+            try:
+                val = float(data[field])
+            except (ValueError, TypeError):
+                return jsonify({'error': f'{field.replace("_", " ").title()} must be a number.'}), 400
+            import math
+            if math.isnan(val) or math.isinf(val):
+                return jsonify({'error': f'{field.replace("_", " ").title()} is not a valid number.'}), 400
+            if not (low <= val <= high):
+                return jsonify({'error': f'{field.replace("_", " ").title()} must be between {low} and {high} cm (dataset range).'}), 400
+            parsed[field] = val
+
         features = np.array([[
-            float(data['sepal_length']),
-            float(data['sepal_width']),
-            float(data['petal_length']),
-            float(data['petal_width'])
+            parsed['sepal_length'],
+            parsed['sepal_width'],
+            parsed['petal_length'],
+            parsed['petal_width']
         ]])
         
         prediction = model.predict(features)[0]
@@ -50,4 +72,5 @@ def predict():
         return jsonify({'error': str(e)}), 400
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    import os
+    app.run(debug=os.getenv('FLASK_DEBUG', 'false').lower() == 'true')

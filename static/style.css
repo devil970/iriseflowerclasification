@@ -145,3 +145,26 @@ input[type="number"]:focus {
     line-height: 1.6;
     margin-bottom: 10px;
 }
+
+.error-message {
+    margin-top: 15px;
+    padding: 12px 16px;
+    background: #fff0f0;
+    border: 1px solid #f5c6cb;
+    border-left: 4px solid #e74c3c;
+    border-radius: 8px;
+    color: #c0392b;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.error-message.hidden {
+    display: none;
+}
+
+.range-hint {
+    font-weight: 400;
+    color: #999;
+    font-size: 12px;
+    margin-left: 6px;
+}
