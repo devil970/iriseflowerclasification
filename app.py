@@ -20,22 +20,31 @@ VALID_RANGES = {
     'petal_width':  (0.1, 2.5),
 }
 
+FIELD_DISPLAY = {
+    'sepal_length': 'Sepal Length',
+    'sepal_width':  'Sepal Width',
+    'petal_length': 'Petal Length',
+    'petal_width':  'Petal Width',
+}
+
 @app.route('/predict', methods=['POST'])
 def predict():
+    import math
     try:
         data = request.get_json()
 
         parsed = {}
         for field, (low, high) in VALID_RANGES.items():
+            label = FIELD_DISPLAY[field]
+            raw = data.get(field, '')
             try:
-                val = float(data[field])
+                val = float(raw)
             except (ValueError, TypeError):
-                return jsonify({'error': f'{field.replace("_", " ").title()} must be a number.'}), 400
-            import math
+                return jsonify({'error': f'{label} must be a numeric value (e.g. {low}).'}), 400
             if math.isnan(val) or math.isinf(val):
-                return jsonify({'error': f'{field.replace("_", " ").title()} is not a valid number.'}), 400
+                return jsonify({'error': f'{label} contains an invalid number. Please enter a real value.'}), 400
             if not (low <= val <= high):
-                return jsonify({'error': f'{field.replace("_", " ").title()} must be between {low} and {high} cm (dataset range).'}), 400
+                return jsonify({'error': f'{label} value {val} is out of range. Accepted range is {low} – {high} cm based on the Iris dataset.'}), 400
             parsed[field] = val
 
         features = np.array([[

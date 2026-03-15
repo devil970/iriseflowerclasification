@@ -1,12 +1,45 @@
+const FIELD_LABELS = {
+    sepal_length: 'sepal_length',
+    sepal_width:  'sepal_width',
+    petal_length: 'petal_length',
+    petal_width:  'petal_width'
+};
+
 function showError(msg) {
     const el = document.getElementById('error-message');
-    el.textContent = msg;
+    el.innerHTML = `
+        <div class="error-icon">&#9888;</div>
+        <div class="error-body">
+            <span class="error-title">Invalid Input</span>
+            <span class="error-detail">${msg}</span>
+        </div>
+        <button class="error-close" onclick="clearError()">&times;</button>
+    `;
     el.classList.remove('hidden');
+    el.classList.add('error-animate');
     document.getElementById('result').classList.add('hidden');
+
+    // Highlight the offending field
+    Object.keys(FIELD_LABELS).forEach(id => {
+        const input = document.getElementById(id);
+        const label = input.closest('.input-group').querySelector('label');
+        const fieldName = id.replace('_', ' ');
+        if (msg.toLowerCase().includes(fieldName)) {
+            input.classList.add('input-error');
+            label.classList.add('label-error');
+        } else {
+            input.classList.remove('input-error');
+            label.classList.remove('label-error');
+        }
+    });
 }
 
 function clearError() {
-    document.getElementById('error-message').classList.add('hidden');
+    const el = document.getElementById('error-message');
+    el.classList.add('hidden');
+    el.classList.remove('error-animate');
+    document.querySelectorAll('.input-error').forEach(i => i.classList.remove('input-error'));
+    document.querySelectorAll('.label-error').forEach(l => l.classList.remove('label-error'));
 }
 
 async function predictFlower() {
